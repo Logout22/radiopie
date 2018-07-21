@@ -4,18 +4,9 @@
 from random import randint
 import unittest
 
+from fakeplayer import FakePlayer
+
 class TestRadio(unittest.TestCase):
-    class FakePlayer(object):
-        """ Fake media player class which captures function calls from Radio """
-        def __init__(self):
-            self._last_url = ""
-
-        def play_url(self, url):
-            self._last_url = url
-
-        def get_last_url(self):
-            return self._last_url
-
     def setUp(self):
         self.general = {'name': 'general', 'content': {'last_station': 1}}
         self.stations = [
@@ -23,7 +14,7 @@ class TestRadio(unittest.TestCase):
             {'name': 'station2', 'content': {'url': 'http://example.org'}},
             {'name': 'station3', 'content': {'url': 'http://example.net'}}
             ]
-        self.player = self.FakePlayer()
+        self.player = FakePlayer()
         config = self.stations[:]
         config.insert(randint(0, 3), self.general)
         self.radio = Radio(config, self.player)
