@@ -6,7 +6,7 @@ import unittest
 
 class TestRadio(unittest.TestCase):
     class FakePlayer(object):
-        """ Fake media player class which captures function call from Radio """
+        """ Fake media player class which captures function calls from Radio """
         def __init__(self):
             self._last_url = ""
 
@@ -49,7 +49,7 @@ class TestRadio(unittest.TestCase):
         self.assertEqual(expected_station['content']['url'], self.player.get_last_url())
 
 class Radio(object):
-    """ Control the radio unit """
+    """ Controls radio playback """
     def __init__(self, config, media_player):
         self._stations = []
         self._load_config(config)
@@ -66,7 +66,7 @@ class Radio(object):
         self._invoke_media_player()
 
     def play_previous_station(self):
-        """ Play the next station in the array of stations given at construction. """
+        """ Play the previous station in the array of stations given at construction. """
         self._select_previous_station()
         self._invoke_media_player()
 
