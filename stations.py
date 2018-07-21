@@ -10,13 +10,15 @@ class TestStations(unittest.TestCase):
         expected_url = 'http://example.com'
         stations_file = '[{}]\nurl={}'.format(expected_station, expected_url)
         stations = load_stations(stations_file)
-        self.assertEqual(expected_url, stations[expected_station]['url'])
+        self.assertEqual(expected_station, stations[0]['name'])
+        self.assertEqual(expected_url, stations[0]['content']['url'])
 
 def load_stations(configuration):
     """ Load radio stations from a given configuration file """
     parser = configparser.ConfigParser()
     parser.read_string(configuration)
-    return {section : dict(parser.items(section)) for section in parser.sections()}
+    return [{'name':section, 'content':dict(parser.items(section))}
+            for section in parser.sections()]
 
 if __name__ == '__main__':
     unittest.main()
