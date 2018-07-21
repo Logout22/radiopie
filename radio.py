@@ -17,30 +17,39 @@ class TestRadio(unittest.TestCase):
         self.assertEqual('station2', self.radio.get_playing_station()['name'])
 
     def test_play_next_station(self):
-        self.radio.play_next_station()
+        new_stations = self.radio.play_next_station()
         self.assertEqual('station3', self.radio.get_playing_station()['name'])
+        self.assertEqual(new_stations[0]['content']['last_station'], 3)
 
     def test_play_previous_station(self):
-        self.radio.play_previous_station()
+        new_stations = self.radio.play_previous_station()
         self.assertEqual('station1', self.radio.get_playing_station()['name'])
+        self.assertEqual(new_stations[0]['content']['last_station'], 1)
 
 class Radio(object):
     """ Control the radio unit """
     def __init__(self, stations):
-        self.stations = stations
-        self.playing_station = stations[0]['content']['last_station']
+        self._stations = stations
+        self._playing_station = self._stations[0]['content']['last_station']
 
     def get_playing_station(self):
         """ Return an object describing the station that currently plays. """
-        return self.stations[self.playing_station]
+        return self._stations[self._playing_station]
 
     def play_next_station(self):
         """ Play the next station in the array of stations given at construction. """
-        self.playing_station = (self.playing_station + 1) % len(self.stations)
+        self._playing_station = (self._playing_station + 1) % len(self._stations)
+        self._update_last_station()
+        return self._stations
 
     def play_previous_station(self):
         """ Play the next station in the array of stations given at construction. """
-        self.playing_station = (self.playing_station - 1) % len(self.stations)
+        self._playing_station = (self._playing_station - 1) % len(self._stations)
+        self._update_last_station()
+        return self._stations
+
+    def _update_last_station(self):
+        self._stations[0]['content']['last_station'] = self._playing_station
 
 if __name__ == '__main__':
     unittest.main()
