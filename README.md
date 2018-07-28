@@ -13,3 +13,11 @@ I also recommend the
 [PowerBlock](https://blog.petrockblock.com/powerblock-raspberry-pi-power-switch/)
 to get feedback on the boot and shutdown process without a proper screen,
 and also to be able to turn your radio on and off using a traditional switch.
+
+## Required software
+
+You should proceed through the steps outlined on
+[Adafruit](https://learn.adafruit.com/character-lcd-with-raspberry-pi-or-beaglebone-black/)
+to install the library for controlling the display.
+Also, if you chose to use the PowerBlock, you need to install a driver,
+which can be found on the page linked above.
